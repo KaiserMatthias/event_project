@@ -12,6 +12,13 @@ Event Übersicht
 
 {% block content %}
 
+<p>
+    <a class="btn btn-primary" 
+       href="{% url 'events:event-create' %}">  <!-- events/create -->
+       Neuen Event eintragen
+    </a>
+</p>
+
 <ul class="list-group event_box">
 {% for event in object_list %}
     <a href="">

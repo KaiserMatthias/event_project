@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.validators import MinLengthValidator
+from .validators import datetime_in_future
 
 
 class Category(models.Model):
@@ -23,9 +25,9 @@ class Category(models.Model):
         """String-Repräsentation eines Kategorie-Objekts, zb. in Admin"""
         return self.name
 
-    def save(self):
+    def save(self, *args, **kwargs):
         print("mach was")
-        return super().save()
+        return super().save(*args, **kwargs)
 
 
 class Event(models.Model):
@@ -37,7 +39,10 @@ class Event(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    name = models.CharField(max_length=100)
+    name = models.CharField(
+        max_length=100,
+        validators=[MinLengthValidator(3)],
+    )
     sub_title = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     category = models.ForeignKey(
@@ -46,8 +51,11 @@ class Event(models.Model):
         related_name="events",  # related Beziehung
     )
     is_active = models.BooleanField(default=True)
-    date = models.DateTimeField()
-    min_group = models.IntegerField(choices=Group.choices, default=Group.SMALL)
+    date = models.DateTimeField(validators=[datetime_in_future])
+    min_group = models.IntegerField(
+        choices=Group.choices,
+        default=Group.SMALL,
+    )
 
     def __str__(self) -> str:
         return self.name

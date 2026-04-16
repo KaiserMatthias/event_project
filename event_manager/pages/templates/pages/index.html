@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+<h1 class="display-6 fw-bold lh-1">Homepage</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+<div class="col-lg-8 col-sm-12">
+
+<h2>Top Events</h2>
+<ul>
+{% for event in events %}
+    <li>{{event}}</li>
+{% endfor %}
+</ul>
+<p>
+    <a href="{% url 'events:event-list' %}">alle Events anzeigen</a>
+</p>
+
+<h2>Kategorien</h2>
+<ul>
+{% for category in categories %}
+    <li>{{category}}</li>
+{% endfor %}
+</ul>
+
+</div>
+</div>
+
+{% endblock %}

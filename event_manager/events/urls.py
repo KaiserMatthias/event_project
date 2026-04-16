@@ -6,6 +6,7 @@ from .views import (
     category_update,
     category_create,
     EventListView,
+    EventCreateView,
 )
 
 # ist nötig für den url-tag im Template: app_name:path_name,
@@ -39,5 +40,11 @@ urlpatterns = [
         "",
         EventListView.as_view(),
         name="event-list",
+    ),
+    # /events/create
+    path(
+        "create",
+        EventCreateView.as_view(),
+        name="event-create",
     ),
 ]

@@ -1,10 +1,26 @@
 # events/views.py
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.http import HttpResponse
 
 from .models import Category, Event
-from .forms import CategoryForm
+from .forms import CategoryForm, EventForm
+
+
+class EventCreateView(CreateView):
+    """Neues Event anlegen.
+
+    /events/create
+    Template: events/event_form.html
+    """
+
+    model = Event
+    form_class = EventForm
+    # nach dem erfolgreichen Eintragen eines Events, wird an die success_url
+    # weitergeleitet: reverse_lazy löst die URL auf (Schema: app_name:path_name, analog
+    # zum url-Tag im Template {% url 'event:event-list' %}
+    success_url = reverse_lazy("events:event-list")
 
 
 class EventListView(ListView):
