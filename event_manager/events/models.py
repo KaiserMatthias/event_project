@@ -26,7 +26,6 @@ class Category(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        print("mach was")
         return super().save(*args, **kwargs)
 
 
